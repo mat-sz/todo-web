@@ -1,0 +1,64 @@
+@import '../../constants.scss';
+
+.authentication {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    a {
+        color: $theme-primary-color;
+    }
+
+    section {
+        position: relative;
+        background: $theme-primary-color;
+        box-shadow: 1px 15px 15px -15px rgba(0,0,0,0.3);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+    
+    input, button {
+        border: none;
+        padding: 0.5rem 0.75rem;
+        font-weight: bold;
+        transition: 0.2s ease-in-out all;
+    }
+    
+    input {
+        color: black;
+        border-bottom: 2px solid $theme-background-color;
+        margin-bottom: 0.5rem;
+
+        &:focus {
+            border-bottom: 2px solid lighten($theme-background-color, 50%);
+        }
+    }
+    
+    button {
+        color: $theme-primary-color;
+        cursor: pointer;
+        background: $theme-background-color;
+    
+        &:hover {
+            background: lighten($theme-background-color, 20%);
+            box-shadow: 1px 15px 15px -15px rgba(0,0,0,0.3);
+        }
+    }
+    
+    .form {
+        min-width: 400px;
+    
+        input, button {
+            display: block;
+            width: 100%;
+        }
+    }
+}

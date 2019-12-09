@@ -1,0 +1,43 @@
+/* From: https://loading.io/css/
+Rewritten in SCSS by me. */
+.spinner {
+    color: white;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    div {
+        transform-origin: 40px 40px;
+        animation: spinner 1.2s linear infinite;
+
+        &:after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 3px;
+            left: 37px;
+            width: 6px;
+            height: 18px;
+            border-radius: 20%;
+            background: #fff;
+        }
+
+        @for $i from 1 through 12 {
+          &:nth-child(#{$i}) {
+            transform: rotate(#{$i * 30 - 30}deg);
+            animation-delay: #{$i * 0.1 - 1.2}s;
+          }
+        }
+    }
+}
+
+@keyframes spinner {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

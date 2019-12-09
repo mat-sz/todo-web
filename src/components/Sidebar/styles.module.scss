@@ -1,0 +1,21 @@
+@import '../../constants.scss';
+
+.sidebar {
+    background: $theme-primary-color;
+    color: $theme-secondary-color;
+
+    .title {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px;
+    }
+
+    a {
+        color: $theme-secondary-color;
+    }
+}
