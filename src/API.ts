@@ -36,7 +36,7 @@ async function httpGet(action: string) {
 async function httpPost(action: string, data: any) {
     let req = await fetch(url + action, {
         body: JSON.stringify(data),
-        method: "POST",
+        method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ async function httpPostForm(action: string, data: any) {
 
     let req = await fetch(url + action, {
         body: formData,
-        method: "POST",
+        method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Accept': 'application/json',
@@ -76,7 +76,7 @@ async function httpPostForm(action: string, data: any) {
 
 async function httpDelete(action: string) {
     let req = await fetch(url + action, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Accept': 'application/json',

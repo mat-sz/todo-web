@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './styles.module.scss';
+
 import { ProjectEntity, UserEntity } from '../../types/Entities';
 import { crudIndex } from '../../API';
-import { Link } from 'react-router-dom';
-
-import styles from './styles.module.scss';
 
 function Sidebar({ user }: { user: UserEntity }) {
     const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
