@@ -15,15 +15,24 @@ function Project() {
     const [ loading, setLoading ] = useState(false);
     const [ project, setProject ] = useState<ProjectEntity>(null);
 
-    const updateProject = useCallback(async (id: number) => {
+    const updateProject = useCallback(async () => {
         setLoading(true);
-        setProject(await crudShow('projects', id));
+        setProject(await crudShow('projects', +params.id));
         setLoading(false);
-    }, [ setProject ])
+    }, [ setProject, params.id ]);
+
+    const onAdd = async (name: string) => {
+        setLoading(true);
+        await crudStore('todolists', {
+            projectId: project.id,
+            name: name,
+        } as TodoListModel);
+        updateProject();
+    };
 
     useEffect(() => {
         if (params.id)
-            updateProject(+params.id);
+            updateProject();
         else
             setProject(null);
     }, [ params, updateProject, setProject ]);
@@ -43,23 +52,14 @@ function Project() {
             { project.todoLists.map((list) =>
                 <TodoList
                     list={list}
-                    onUpdate={() => {
-                        updateProject(project.id);
-                    }}
+                    onUpdate={updateProject}
                 />
             ) }
             <div>
                 <AddButton 
                     title="Add a new task list"
                     defaultValue="New list"
-                    onAdd={async (name) => {
-                        setLoading(true);
-                        await crudStore('todolists', {
-                            projectId: project.id,
-                            name: name,
-                        } as TodoListModel);
-                        updateProject(project.id);
-                    }}
+                    onAdd={onAdd}
                 />
             </div>
         </div>

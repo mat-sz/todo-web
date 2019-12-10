@@ -8,6 +8,16 @@ import { crudStore } from '../../API';
 import { TodoItemModel } from '../../types/Models';
 
 function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => void }) {
+    const addItem = async (text: string) => {
+        await crudStore('todoitems', {
+            todoListId: list.id,
+            name: text,
+            done: false,
+        } as TodoItemModel);
+        if (onUpdate)
+            onUpdate();
+    };
+
     return (
         <div className={styles.list}>
             <h2>{ list.name }</h2>
@@ -17,15 +27,7 @@ function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => 
             <InlineForm
                 defaultValue=""
                 saveText="Add"
-                onSave={async (text) => {
-                    await crudStore('todoitems', {
-                        todoListId: list.id,
-                        name: text,
-                        done: false,
-                    } as TodoItemModel);
-                    if (onUpdate)
-                        onUpdate();
-                }}
+                onSave={addItem}
             />
         </div>
     );

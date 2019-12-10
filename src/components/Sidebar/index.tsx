@@ -19,6 +19,14 @@ function Sidebar({ user }: { user: UserEntity }) {
         setLoading(false);
     }, [ setProjects, setLoading ]);
 
+    const onAdd = async (name: string) => {
+        setLoading(true);
+        await crudStore('projects', {
+            name: name,
+        } as ProjectModel);
+        updateProjects();
+    };
+
     useEffect(() => {
         updateProjects();
     }, [ updateProjects ]);
@@ -55,13 +63,7 @@ function Sidebar({ user }: { user: UserEntity }) {
                     <AddButton
                         title="Create a new project"
                         defaultValue="New project"
-                        onAdd={async (name) => {
-                            setLoading(true);
-                            await crudStore('projects', {
-                                name: name,
-                            } as ProjectModel);
-                            updateProjects();
-                        }}
+                        onAdd={onAdd}
                     />
                 </li>
             </ul>

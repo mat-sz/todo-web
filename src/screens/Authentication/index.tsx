@@ -12,6 +12,17 @@ function Authentication({ error, isSignup = false }: {
     const [ password, setPassword ] = useState<string>(null);
     const [ passwordConfirmation, setPasswordConfirmation ] = useState<string>(null);
 
+    const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+    const onChangePasswordConfirmation = (e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirmation(e.target.value);
+
+    const action = () => {
+        if (isSignup)
+            signup(username, password);
+        else
+            authenticate(username, password);
+    };
+
     return (
         <div className={styles.authentication}>
             <h1>{ isSignup ? 'Sign up' : 'Sign in' }</h1>
@@ -22,29 +33,24 @@ function Authentication({ error, isSignup = false }: {
                 <label>
                     <input
                         placeholder="Username"
-                        onChange={(e) => setUsername(e.target.value)} />
+                        onChange={onChangeUsername} />
                 </label>
                 <label>
                     <input
                         placeholder="Password"
                         type="password"
-                        onChange={(e) => setPassword(e.target.value)} />
+                        onChange={onChangePassword} />
                 </label>
                 { isSignup ?
                     <label>
                         <input
                             placeholder="Confirm password"
                             type="password"
-                            onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            onChange={onChangePasswordConfirmation} />
                     </label>
                 : null }
                 <div>
-                    <button onClick={() => {
-                        if (isSignup)
-                            signup(username, password);
-                        else
-                            authenticate(username, password);
-                    }}
+                    <button onClick={action}
                         disabled={!username || !password || (isSignup && password !== passwordConfirmation)}>
                         Sign in
                     </button>

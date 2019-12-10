@@ -6,27 +6,33 @@ import InlineForm from '../InlineForm';
 function AddButton({ title, defaultValue, onAdd }: { title: string, defaultValue: string, onAdd: (value: string) => void }) {
     const [ adding, setAdding ] = useState(false);
 
+    const onSave = (value: string) => {
+        setAdding(false);
+        onAdd(value);
+    };
+
+    const onCancel = () => {
+        setAdding(false);
+    };
+
+    const startAdding = () => {
+        setAdding(true);
+    };
+
     if (adding) {
         return (
             <InlineForm
                 defaultValue={defaultValue}
                 saveText="Add"
-                onSave={(value) => {
-                    setAdding(false);
-                    onAdd(value);
-                }}
-                onCancel={() => {
-                    setAdding(false);
-                }}
+                onSave={onSave}
+                onCancel={onCancel}
             />
         )
     }
 
     return (
         <div className={styles.addButton}>
-            <button onClick={() => {
-                setAdding(true);
-            }}>
+            <button onClick={startAdding}>
                 <TiPlus />
                 <span>{ title }</span>
             </button>
