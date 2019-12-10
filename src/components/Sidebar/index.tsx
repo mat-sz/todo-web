@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { TiChevronRight, TiPlus } from 'react-icons/ti';
+import { TiChevronRight } from 'react-icons/ti';
 import styles from './styles.module.scss';
 
 import { ProjectEntity, UserEntity } from '../../types/Entities';
