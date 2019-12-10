@@ -20,6 +20,34 @@ body {
 h1, h2, h3 {
   margin: 0;
 }
+    
+input, button {
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    transition: 0.2s ease-in-out all;
+}
+
+input {
+    color: black;
+    border-bottom: 2px solid $theme-background-color;
+    margin-bottom: 0.5rem;
+
+    &:focus {
+        border-bottom: 2px solid lighten($theme-background-color, 50%);
+    }
+}
+
+button {
+    color: $theme-primary-color;
+    cursor: pointer;
+    background: $theme-background-color;
+
+    &:hover {
+        background: lighten($theme-background-color, 20%);
+        box-shadow: 1px 15px 15px -15px rgba(0,0,0,0.3);
+    }
+}
 
 .logged-in {
   background-color: $theme-primary-color;

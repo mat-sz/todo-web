@@ -1,7 +1,7 @@
 export interface Entity {
     id: number,
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt?: Date,
+    updatedAt?: Date,
 }
 
 export interface TodoItemEntity extends Entity {
@@ -16,7 +16,9 @@ export interface TodoListEntity extends Entity {
 
 export interface ProjectEntity extends Entity {
     name: string,
-    todoLists: TodoListEntity[],
+    todoLists?: TodoListEntity[],
+    isNew?: boolean,
+    isBeingRenamed?: boolean,
 };
 
 export interface UserEntity extends Entity {

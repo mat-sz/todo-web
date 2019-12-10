@@ -40,10 +40,33 @@
         padding: 0;
 
         li:not(.title) {
-            display: flex;
-            align-items: center;
 
-            a {
+            svg {
+                width: 18px;
+            }
+
+            .newProject {
+                display: flex;
+
+                input {
+                    width: auto;
+                    min-width: 0;
+                    margin-bottom: 0;
+                }
+
+                button {
+                    flex: 1;
+                }
+            }
+
+            & > a, & > button {
+                display: flex;
+                align-items: center;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-weight: normal;
+
                 color: $theme-primary-color;
                 text-decoration: none;
                 padding: 0.75rem 0.5rem;
