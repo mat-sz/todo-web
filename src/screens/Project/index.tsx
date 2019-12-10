@@ -41,7 +41,12 @@ function Project() {
             { loading ? <SpinnerOverlay /> : null }
             <h1>{ project.name }</h1>
             { project.todoLists.map((list) =>
-                <TodoList list={list} />
+                <TodoList
+                    list={list}
+                    onUpdate={() => {
+                        updateProject(project.id);
+                    }}
+                />
             ) }
             <div>
                 <AddButton 

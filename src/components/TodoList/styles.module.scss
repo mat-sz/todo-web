@@ -10,4 +10,8 @@
         font-weight: normal;
         font-size: 0.75rem;
     }
+
+    *:last-child {
+        padding-top: 0.5rem;
+    }
 }

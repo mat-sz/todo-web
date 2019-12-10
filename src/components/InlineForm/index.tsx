@@ -12,10 +12,12 @@ function InlineForm({ defaultValue, onSave, onCancel, saveText = 'Save' }: { def
             }} />
             { onCancel ?
                 <button onClick={async () => {
+                    setValue('');
                     onCancel();
                 }}>Cancel</button>
             : null }
             <button onClick={async () => {
+                setValue('');
                 onSave(value);
             }}>{ saveText }</button>
         </div>
