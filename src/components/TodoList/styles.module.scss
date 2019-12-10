@@ -1,0 +1,13 @@
+@import '../../constants.scss';
+
+.list {
+    padding: 0.5rem;
+    margin: 1rem 0;
+    background: darken($theme-primary-color, 5%);
+
+    h2 {
+        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 0.75rem;
+    }
+}
