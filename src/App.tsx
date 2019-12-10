@@ -54,7 +54,7 @@ const App = () => {
 
     return (
         <Router>
-            <div className={"app " + loggedIn ? "logged-in" : null}>
+            <div className={"app " + (loggedIn ? "logged-in" : null)}>
                 { loading ?
                     <SpinnerOverlay />
                 : null }

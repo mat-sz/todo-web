@@ -1,21 +1,67 @@
 @import '../../constants.scss';
 
 .sidebar {
-    background: $theme-primary-color;
-    color: $theme-secondary-color;
+    background: $theme-background-color;
+    color: $theme-primary-color;
+
+    .user {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem 0;
+
+        .avatar {
+            background: lighten($theme-background-color, 20%);
+            border-radius: 2.5rem;
+            width: 5rem;
+            height: 5rem;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+    }
 
     .title {
-        font-weight: bold;
+        color: darken($theme-primary-color, 20%);
+        font-size: 0.75rem;
+        text-transform: uppercase;
         text-align: center;
+        padding: 0.5rem 0;
     }
 
     ul {
+        border-top: 1px solid darken($theme-background-color, 5%);
         list-style-type: none;
         margin: 0;
-        padding: 10px;
-    }
+        padding: 0;
 
-    a {
-        color: $theme-secondary-color;
+        li:not(.title) {
+            display: flex;
+            align-items: center;
+
+            a {
+                color: $theme-primary-color;
+                text-decoration: none;
+                padding: 0.75rem 0.5rem;
+                display: flex;
+                align-items: center;
+                width: 100%;
+
+                span {
+                    padding: 0 0.25rem;
+
+                    font-size: 0.9rem;
+                    margin-top: -0.1rem;
+                }
+
+                &:hover, &.active {
+                    background-color: darken($theme-background-color, 5%);
+                }
+            }
+        }
     }
 }

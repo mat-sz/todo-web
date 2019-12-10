@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { TiChevronRight } from 'react-icons/ti';
 import styles from './styles.module.scss';
 
 import { ProjectEntity, UserEntity } from '../../types/Entities';
@@ -18,17 +19,22 @@ function Sidebar({ user }: { user: UserEntity }) {
 
     return (
         <div className={styles.sidebar}>
-            <ul>
-                <li className={styles.title}>User</li>
-                <li>{user.username}</li>
-            </ul>
+            <div className={styles.user}>
+                <div className={styles.avatar}>
+                    {user.username[0].toUpperCase()}
+                </div>
+                <div className={styles.username}>
+                    {user.username}
+                </div>
+            </div>
             <ul>
                 <li className={styles.title}>Projects</li>
             { projects.map((project) => 
                 <li>
-                    <Link to={'/projects/' + project.id}>
-                        {project.name}
-                    </Link>
+                    <NavLink to={'/projects/' + project.id} activeClassName={styles.active}>
+                        <TiChevronRight />
+                        <span>{project.name}</span>
+                    </NavLink>
                 </li>
             ) }
             </ul>

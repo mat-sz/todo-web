@@ -14,7 +14,7 @@ function Authentication({ error, isSignup = false }: {
 
     return (
         <div className={styles.authentication}>
-            <h3>{ isSignup ? 'Sign up' : 'Sign in' }</h3>
+            <h1>{ isSignup ? 'Sign up' : 'Sign in' }</h1>
             <section className={styles.form}>
                 { error ?
                 <div>{error}</div>
