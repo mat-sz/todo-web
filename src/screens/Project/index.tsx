@@ -51,6 +51,7 @@ function Project() {
             <h1>{ project.name }</h1>
             { project.todoLists.map((list) =>
                 <TodoList
+                    key={list.id}
                     list={list}
                     onUpdate={updateProject}
                 />

@@ -22,7 +22,10 @@ function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => 
         <div className={styles.list}>
             <h2>{ list.name }</h2>
             { list.todoItems.map((item) =>
-                <TodoItem item={item} />
+                <TodoItem
+                    key={item.id}
+                    item={item}
+                />
             ) }
             <InlineForm
                 defaultValue=""
