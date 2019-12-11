@@ -15,8 +15,16 @@ function executeHandlers(eventName: string, args?: any[]) {
 }
 
 function isAuthenticated(json: any) {
-    if (json.error && json.error.status === 403) {
+    if (json && json.error && json.error.status === 403) {
         executeHandlers('deauthenticated');
+    }
+}
+
+async function tryJson(response: Response) {
+    try {
+        return await response.json();
+    } catch {
+        return null;
     }
 }
 
@@ -28,7 +36,7 @@ async function httpGet(action: string) {
         }
     });
     
-    let json = await req.json();
+    let json = await tryJson(req);
     isAuthenticated(json);
     return json;
 }
@@ -44,7 +52,7 @@ async function httpPost(action: string, data: any) {
         }
     });
 
-    let json = await req.json();
+    let json = await tryJson(req);
     isAuthenticated(json);
     return json;
 }
@@ -69,7 +77,7 @@ async function httpPostForm(action: string, data: any) {
         }
     });
 
-    let json = await req.json();
+    let json = await tryJson(req);
     isAuthenticated(json);
     return json;
 }
@@ -83,7 +91,7 @@ async function httpDelete(action: string) {
         }
     });
 
-    let json = await req.json();
+    let json = await tryJson(req);
     isAuthenticated(json);
     return json;
 }
@@ -214,11 +222,14 @@ async function signup(username: string, password: string) {
 async function checkToken(value: string) {
     token = value;
     const json = await user();
-    if (!json) {
+    
+    if (json) {
+        executeHandlers('authenticated', [json]);
+    } else {
+        localStorage.removeItem('token');
+        executeHandlers('deauthenticated');
         token = null;
     }
-    
-    executeHandlers('authenticated', [json]);
 
     return json;
 }
