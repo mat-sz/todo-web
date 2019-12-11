@@ -8,20 +8,38 @@ function InlineForm({ defaultValue, onSave, onCancel, saveText = 'Save' }: { def
         setValue(e.target.value);
     };
 
-    const save = async () => {
+    const save = () => {
         setValue('');
         onSave(value);
     };
 
-    const cancel = async () => {
-        setValue('');
-        onCancel();
+    const cancel = () => {
+        if (onCancel) {
+            setValue('');
+            onCancel();
+        }
+    };
+
+    const keyUp = (e: React.KeyboardEvent) => {
+        console.log(e.key);
+        switch (e.key) {
+            case 'Enter':
+                save();
+                break;
+            case 'Escape':
+                cancel();
+                break;
+        }
     };
 
     return (
         <div className={styles.inlineForm}>
-            <input type="text" value={value}
-            onChange={updateValue} />
+            <input
+                type="text"
+                value={value}
+                onChange={updateValue}
+                onKeyUp={keyUp}
+            />
             { onCancel ?
                 <button onClick={cancel}>
                     Cancel
