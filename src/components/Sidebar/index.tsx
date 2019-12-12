@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 import { ProjectEntity, UserEntity } from '../../types/Entities';
 import { crudIndex, crudStore } from '../../API';
 import SpinnerOverlay from '../SpinnerOverlay';
-import AddButton from '../AddButton';
+import ButtonAdd from '../ButtonAdd';
 import { ProjectModel } from '../../types/Models';
 
 function Sidebar({ user }: { user: UserEntity }) {
@@ -60,7 +60,7 @@ function Sidebar({ user }: { user: UserEntity }) {
                 </li>
             ) }
                 <li>
-                    <AddButton
+                    <ButtonAdd
                         title="Create a new project"
                         defaultValue="New project"
                         onAdd={onAdd}

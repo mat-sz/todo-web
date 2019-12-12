@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import { crudShow, crudStore } from '../../API';
 import { ProjectEntity } from '../../types/Entities';
 import SpinnerOverlay from '../../components/SpinnerOverlay';
-import AddButton from '../../components/AddButton';
+import ButtonAdd from '../../components/ButtonAdd';
 import TodoList from '../../components/TodoList';
 import { TodoListModel } from '../../types/Models';
 
@@ -57,7 +57,7 @@ function Project() {
                 />
             ) }
             <div>
-                <AddButton 
+                <ButtonAdd 
                     title="Add a new task list"
                     defaultValue="New list"
                     onAdd={onAdd}

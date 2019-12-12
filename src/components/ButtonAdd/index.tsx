@@ -3,7 +3,7 @@ import { MdAdd } from 'react-icons/md';
 import styles from './styles.module.scss';
 import InlineForm from '../InlineForm';
 
-function AddButton({ title, defaultValue, onAdd }: { title: string, defaultValue: string, onAdd: (value: string) => void }) {
+function ButtonAdd({ title, defaultValue, onAdd }: { title: string, defaultValue: string, onAdd: (value: string) => void }) {
     const [ adding, setAdding ] = useState(false);
 
     const onSave = (value: string) => {
@@ -31,7 +31,7 @@ function AddButton({ title, defaultValue, onAdd }: { title: string, defaultValue
     }
 
     return (
-        <div className={styles.addButton}>
+        <div className={styles.buttonAdd}>
             <button onClick={startAdding}>
                 <MdAdd />
                 <span>{ title }</span>
@@ -40,4 +40,4 @@ function AddButton({ title, defaultValue, onAdd }: { title: string, defaultValue
     );
 }
 
-export default AddButton;
+export default ButtonAdd;
