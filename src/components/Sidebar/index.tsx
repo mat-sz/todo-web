@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { TiChevronRight } from 'react-icons/ti';
+import { MdChevronRight } from 'react-icons/md';
 import styles from './styles.module.scss';
 
 import { ProjectEntity, UserEntity } from '../../types/Entities';
@@ -47,7 +47,7 @@ function Sidebar({ user }: { user: UserEntity }) {
             { projects.map((project) => 
                 <li key={project.id}>
                     <NavLink to={'/projects/' + project.id} activeClassName={styles.active}>
-                        <TiChevronRight />
+                        <MdChevronRight />
                         { !project.isBeingRenamed ?
                             <span>{ project.name }</span>
                         :

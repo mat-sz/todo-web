@@ -2,7 +2,8 @@
 
 .addButton {
     svg {
-        width: 18px;
+        width: 24px;
+        height: 24px;
     }
 
     & > a, & > button {
@@ -24,7 +25,6 @@
             padding: 0 0.25rem;
 
             font-size: 0.9rem;
-            margin-top: -0.1rem;
         }
 
         &:hover, &.active {

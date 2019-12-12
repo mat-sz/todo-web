@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TiPlus } from 'react-icons/ti';
+import { MdAdd } from 'react-icons/md';
 import styles from './styles.module.scss';
 import InlineForm from '../InlineForm';
 
@@ -33,7 +33,7 @@ function AddButton({ title, defaultValue, onAdd }: { title: string, defaultValue
     return (
         <div className={styles.addButton}>
             <button onClick={startAdding}>
-                <TiPlus />
+                <MdAdd />
                 <span>{ title }</span>
             </button>
         </div>
