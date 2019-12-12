@@ -1,4 +1,14 @@
 @import '../../constants.scss';
 
 .item {
+    display: flex;
+    align-items: center;
+
+    span {
+        margin-top: -0.5rem;
+    }
+}
+
+.done {
+    text-decoration: line-through;
 }

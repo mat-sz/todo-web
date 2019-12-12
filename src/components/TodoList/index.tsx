@@ -21,12 +21,14 @@ function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => 
     return (
         <div className={styles.list}>
             <h2>{ list.name }</h2>
-            { list.todoItems.map((item) =>
-                <TodoItem
-                    key={item.id}
-                    item={item}
-                />
-            ) }
+            <div className={styles.items}>
+                { list.todoItems.map((item) =>
+                    <TodoItem
+                        key={item.id}
+                        item={item}
+                    />
+                ) }
+            </div>
             <InlineForm
                 defaultValue=""
                 saveText="Add"

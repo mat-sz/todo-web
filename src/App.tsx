@@ -4,6 +4,7 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
+import classNames from 'classnames';
 import './App.scss';
 
 import * as API from './API';
@@ -54,7 +55,9 @@ const App = () => {
 
     return (
         <Router>
-            <div className={"app " + (loggedIn ? "logged-in" : null)}>
+            <div className={classNames('app', {
+                'logged-in': loggedIn,
+            })}>
                 { loading ?
                     <SpinnerOverlay />
                 : null }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 import { TodoItemEntity } from '../../types/Entities';
@@ -15,7 +16,9 @@ function TodoItem({ item } : { item: TodoItemEntity }) {
     };
 
     return (
-        <div className={styles.item}>
+        <div className={classNames(styles.item, {
+            [styles.done]: checked
+        })}>
             <input type="checkbox"
                 checked={checked}
                 onChange={onChange}

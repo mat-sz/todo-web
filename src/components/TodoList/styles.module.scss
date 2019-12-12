@@ -11,7 +11,7 @@
         font-size: 0.75rem;
     }
 
-    *:last-child {
+    & > *:not(:first-child) {
         padding-top: 0.5rem;
     }
 }
