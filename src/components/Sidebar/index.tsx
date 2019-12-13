@@ -1,13 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { MdChevronRight } from 'react-icons/md';
 import styles from './styles.module.scss';
 
 import { ProjectEntity, UserEntity } from '../../types/Entities';
+import { ProjectModel } from '../../types/Models';
 import { crudIndex, crudStore } from '../../API';
 import SpinnerOverlay from '../SpinnerOverlay';
 import ButtonAdd from '../ButtonAdd';
-import { ProjectModel } from '../../types/Models';
+import SidebarProject from '../SidebarProject';
 
 function Sidebar({ user }: { user: UserEntity }) {
     const [ loading, setLoading ] = useState(false);
@@ -45,19 +44,11 @@ function Sidebar({ user }: { user: UserEntity }) {
             <ul>
                 <li className={styles.title}>Projects</li>
             { projects.map((project) => 
-                <li key={project.id}>
-                    <NavLink to={'/projects/' + project.id} activeClassName={styles.active}>
-                        <MdChevronRight />
-                        { !project.isBeingRenamed ?
-                            <span>{ project.name }</span>
-                        :
-                            <div>
-                                <input type="text" value={project.name} />
-                                <button>Save</button>
-                            </div>
-                        }
-                    </NavLink>
-                </li>
+                <SidebarProject
+                    project={project}
+                    key={project.id}
+                    updateProjects={updateProjects}
+                />
             ) }
                 <li>
                     <ButtonAdd

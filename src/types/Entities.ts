@@ -17,8 +17,6 @@ export interface TodoListEntity extends Entity {
 export interface ProjectEntity extends Entity {
     name: string,
     todoLists?: TodoListEntity[],
-    isNew?: boolean,
-    isBeingRenamed?: boolean,
 };
 
 export interface UserEntity extends Entity {

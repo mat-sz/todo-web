@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
 import styles from './styles.module.scss';
 
