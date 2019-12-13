@@ -2,7 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-interface MenuAction {
+import MenuItem from '../MenuItem';
+
+export interface MenuAction {
     title: string,
     onClick: () => void,
 };
@@ -13,13 +15,7 @@ function Menu({ actions, hidden }: { actions: MenuAction[], hidden: boolean } ) 
             [styles.hidden]: hidden,
         })}>
             { actions.map((action, i) => 
-                <button
-                    key={i}
-                    className={styles.menuItem}
-                    onClick={action.onClick}
-                >
-                    {action.title}
-                </button>
+                <MenuItem action={action} key={i} />
             ) }
         </div>
     );
