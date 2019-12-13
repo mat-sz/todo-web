@@ -3,11 +3,13 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 import { TodoItemEntity } from '../../types/Entities';
-import { crudUpdate } from '../../API';
+import { crudUpdate, crudDelete } from '../../API';
 import ButtonMenu from '../ButtonMenu';
+import Menu from '../Menu';
 
-function TodoItem({ item } : { item: TodoItemEntity }) {
+function TodoItem({ item, onUpdate } : { item: TodoItemEntity, onUpdate?: () => void }) {
     const [ checked, setChecked ] = useState(item.done);
+    const [ menuHidden, setMenuHidden ] = useState(true);
     
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -19,6 +21,13 @@ function TodoItem({ item } : { item: TodoItemEntity }) {
 
     const openMenu = (e: React.SyntheticEvent) => {
         e.preventDefault();
+        setMenuHidden(hidden => !hidden);
+    };
+
+    const deleteItem = async () => {
+        await crudDelete('todoitems', item);
+        if (onUpdate)
+            onUpdate();
     };
 
     return (
@@ -33,6 +42,12 @@ function TodoItem({ item } : { item: TodoItemEntity }) {
             />
             <span>{ item.name }</span>
             <ButtonMenu onClick={openMenu} />
+            <Menu hidden={menuHidden} actions={[
+                {
+                    title: "Delete",
+                    onClick: deleteItem,
+                }
+            ]} />
         </div>
     );
 }

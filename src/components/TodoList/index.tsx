@@ -26,6 +26,7 @@ function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => 
                     <TodoItem
                         key={item.id}
                         item={item}
+                        onUpdate={onUpdate}
                     />
                 ) }
             </div>
