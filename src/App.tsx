@@ -13,6 +13,7 @@ import { UserEntity } from './types/Entities';
 import Authentication from './screens/Authentication';
 import Project from './screens/Project';
 import Sidebar from './components/Sidebar';
+import List from './screens/List';
 
 const App = () => {
     const [ loading, setLoading ] = useState(true);
@@ -65,6 +66,9 @@ const App = () => {
                     <>
                         <Sidebar user={user} />
                         <Switch>
+                            <Route path="/lists/:id">
+                                <List />
+                            </Route>
                             <Route path="/projects/:id">
                                 <Project />
                             </Route>
