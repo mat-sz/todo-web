@@ -1,5 +1,15 @@
+@import '../../constants.scss';
+
 .sidebarProject {
     span {
         flex: 1;
+    }
+
+    button {
+        padding: 0 0.5rem;
+    }
+
+    svg {
+        fill: $theme-primary-color;
     }
 }
