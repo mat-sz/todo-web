@@ -9,7 +9,34 @@
         padding: 0 0.5rem;
     }
 
+    .chevron {
+        padding: 0;
+        background: transparent;
+    }
+
+    .chevronOpen {
+        transform: rotate(90deg);
+    }
+
     svg {
         fill: $theme-primary-color;
+    }
+
+    ul {
+        border-top: none;
+    }
+
+    .lists {
+        max-height: 500px;
+        transition: 0.2s ease-in-out all;
+        overflow: hidden;
+
+        li {
+            padding-left: 2rem;
+        }
+    }
+
+    .hidden {
+        max-height: 0;
     }
 }
