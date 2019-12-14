@@ -18,6 +18,7 @@ import List from './screens/List';
 const App = () => {
     const [ loading, setLoading ] = useState(true);
     const [ loggedIn, setLoggedIn ] = useState(false);
+    const [ darkTheme, setDarkTheme ] = useState(false);
     const [ user, setUser ] = useState<UserEntity>(null);
     const [ error, setError ] = useState<string>(null);
     const [ title, setTitle ] = useState('TODO');
@@ -58,6 +59,7 @@ const App = () => {
         <Router>
             <div className={classNames('app', {
                 'logged-in': loggedIn,
+                'theme-dark': loggedIn && darkTheme,
             })}>
                 { loading ?
                     <SpinnerOverlay />

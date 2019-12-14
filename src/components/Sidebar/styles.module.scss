@@ -2,7 +2,7 @@
 
 .sidebar {
     background: $theme-background-color;
-    color: $theme-primary-color;
+    color: $theme-light-color;
 
     .user {
         display: flex;
@@ -26,7 +26,7 @@
     }
 
     .title {
-        color: darken($theme-primary-color, 20%);
+        color: darken($theme-light-color, 20%);
         font-size: 0.75rem;
         text-transform: uppercase;
         text-align: center;
@@ -54,7 +54,7 @@
                 cursor: pointer;
                 font-weight: normal;
 
-                color: $theme-primary-color;
+                color: $theme-light-color;
                 text-decoration: none;
                 padding: 0.75rem 0.5rem;
                 display: flex;

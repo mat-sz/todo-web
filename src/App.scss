@@ -39,7 +39,7 @@ input {
 }
 
 button {
-    color: $theme-primary-color;
+    color: $theme-light-color;
     cursor: pointer;
     background: $theme-background-color;
 
@@ -52,6 +52,15 @@ button {
 .logged-in {
   background-color: $theme-primary-color;
   color: $theme-secondary-color;
+}
+
+.theme-dark {
+  background-color: $theme-secondary-color;
+  color: $theme-primary-color;
+
+  input {
+    background: darken($theme-primary-color, 10%);
+  }
 }
 
 @media screen and (min-width: 768px) {
