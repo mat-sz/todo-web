@@ -1,6 +1,10 @@
 @import '../../constants.scss';
 
 .sidebarProject {
+    a {
+        position: relative;
+    }
+    
     span {
         flex: 1;
     }
