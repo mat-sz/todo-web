@@ -66,7 +66,11 @@ const App = () => {
                 : null }
                 { loggedIn ? 
                     <>
-                        <Sidebar user={user} />
+                        <Sidebar
+                            darkTheme={darkTheme}
+                            setDarkTheme={setDarkTheme}
+                            user={user}
+                        />
                         <Switch>
                             <Route path="/lists/:id">
                                 <List />

@@ -10,7 +10,7 @@ import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
 
-function Sidebar({ user }: { user: UserEntity }) {
+function Sidebar({ user, darkTheme, setDarkTheme }: { user: UserEntity, darkTheme: boolean, setDarkTheme: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [ loading, setLoading ] = useState(false);
     const [ menuHidden, setMenuHidden ] = useState(true);
     const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
@@ -30,6 +30,7 @@ function Sidebar({ user }: { user: UserEntity }) {
     };
 
     const toggleMenu = () => setMenuHidden(hidden => !hidden);
+    const toggleDarkTheme = () => setDarkTheme(darkTheme => !darkTheme);
 
     useEffect(() => {
         updateProjects();
@@ -48,9 +49,13 @@ function Sidebar({ user }: { user: UserEntity }) {
                 <Menu
                     actions={[
                         {
-                            title: "Log out",
+                            title: darkTheme ? 'Light theme' : 'Dark theme',
+                            onClick: toggleDarkTheme,
+                        },
+                        {
+                            title: 'Log out',
                             onClick: deauthenticate,
-                        }
+                        },
                     ]}
                     hidden={menuHidden}
                 />
