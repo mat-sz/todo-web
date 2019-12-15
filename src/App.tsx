@@ -25,6 +25,10 @@ const App = () => {
 
     // Behaves like the good old "componentDidMount" when the second argument is an empty array.
     useEffect(() => {
+        // Dark theme setting persistence.
+        if (localStorage.getItem('darkTheme') === 'true')
+            setDarkTheme(true);
+
         // API events.
         API.on('authenticated', (user: UserEntity) => {
             setLoading(false);
@@ -54,6 +58,10 @@ const App = () => {
     useEffect(() => {
         document.title = title;
     }, [ title ]);
+
+    useEffect(() => {
+        localStorage.setItem('darkTheme', darkTheme.toString())
+    }, [ darkTheme ])
 
     return (
         <Router>
