@@ -1,15 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { MdArrowDropDown } from 'react-icons/md';
 import styles from './styles.module.scss';
 
 import { ProjectEntity, UserEntity } from '../../types/Entities';
 import { ProjectModel } from '../../types/Models';
-import { crudIndex, crudStore } from '../../API';
+import { crudIndex, crudStore, deauthenticate } from '../../API';
 import SpinnerOverlay from '../SpinnerOverlay';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
+import Menu from '../Menu';
 
 function Sidebar({ user }: { user: UserEntity }) {
     const [ loading, setLoading ] = useState(false);
+    const [ menuHidden, setMenuHidden ] = useState(true);
     const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
 
     const updateProjects = useCallback(async () => {
@@ -26,6 +29,8 @@ function Sidebar({ user }: { user: UserEntity }) {
         updateProjects();
     };
 
+    const toggleMenu = () => setMenuHidden(hidden => !hidden);
+
     useEffect(() => {
         updateProjects();
     }, [ updateProjects ]);
@@ -37,9 +42,18 @@ function Sidebar({ user }: { user: UserEntity }) {
                 <div className={styles.avatar}>
                     {user.username[0].toUpperCase()}
                 </div>
-                <div className={styles.username}>
-                    {user.username}
-                </div>
+                <button className={styles.username} onClick={toggleMenu}>
+                    {user.username} <MdArrowDropDown />
+                </button>
+                <Menu
+                    actions={[
+                        {
+                            title: "Log out",
+                            onClick: deauthenticate,
+                        }
+                    ]}
+                    hidden={menuHidden}
+                />
             </div>
             <ul>
                 <li className={styles.title}>Projects</li>

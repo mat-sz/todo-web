@@ -193,6 +193,7 @@ async function authenticate(username: string, password: string) {
  */
 function deauthenticate() {
     localStorage.removeItem('token');
+    executeHandlers('deauthenticated');
 }
 
 /**

@@ -11,7 +11,7 @@ export interface MenuAction {
 
 function Menu({ actions, hidden }: { actions: MenuAction[], hidden: boolean } ) {
     return (
-        <div className={classNames(styles.menu, {
+        <div className={classNames(styles.menu, "menu", {
             [styles.hidden]: hidden,
         })}>
             { actions.map((action, i) => 

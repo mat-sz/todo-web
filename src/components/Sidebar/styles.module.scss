@@ -9,6 +9,19 @@
         align-items: center;
         flex-direction: column;
         padding: 1rem 0;
+        position: relative;
+
+        :global(.menu) {
+            top: 100%;
+
+            button {
+                background: lighten($theme-background-color, 5%);
+
+                &:hover {
+                    background: lighten($theme-background-color, 20%);
+                }
+            }
+        }
 
         .avatar {
             background: lighten($theme-background-color, 20%);
@@ -22,6 +35,11 @@
 
             font-size: 3rem;
             margin-bottom: 0.5rem;
+        }
+
+        .username {
+            display: flex;
+            align-items: center;
         }
     }
 
