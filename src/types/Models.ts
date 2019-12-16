@@ -51,3 +51,8 @@ export interface ObjectModel {
     id: string|number,
     [x: string]: any,
 };
+
+export interface ActionModel {
+    type: number,
+    value: any,
+};

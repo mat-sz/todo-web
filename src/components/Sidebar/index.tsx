@@ -1,16 +1,27 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MdArrowDropDown } from 'react-icons/md';
 import styles from './styles.module.scss';
 
-import { ProjectEntity, UserEntity } from '../../types/Entities';
+import { ProjectEntity } from '../../types/Entities';
 import { ProjectModel } from '../../types/Models';
+import { ActionType } from '../../types/ActionType';
+import { StateType } from '../../reducers';
 import { crudIndex, crudStore, deauthenticate } from '../../API';
 import SpinnerOverlay from '../SpinnerOverlay';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
 
-function Sidebar({ user, darkTheme, setDarkTheme }: { user: UserEntity, darkTheme: boolean, setDarkTheme: React.Dispatch<React.SetStateAction<boolean>> }) {
+function Sidebar() {
+    const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
+    const user = useSelector((state: StateType) => state.authenticationState.user);
+    const dispatch = useDispatch();
+
+    const toggleDarkTheme = useCallback(() => {
+        dispatch({ type: ActionType.TOGGLE_DARK_THEME });
+    }, [ dispatch ]);
+    
     const [ loading, setLoading ] = useState(false);
     const [ menuHidden, setMenuHidden ] = useState(true);
     const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
@@ -30,7 +41,6 @@ function Sidebar({ user, darkTheme, setDarkTheme }: { user: UserEntity, darkThem
     };
 
     const toggleMenu = () => setMenuHidden(hidden => !hidden);
-    const toggleDarkTheme = () => setDarkTheme(darkTheme => !darkTheme);
 
     useEffect(() => {
         updateProjects();

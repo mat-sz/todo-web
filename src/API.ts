@@ -1,22 +1,28 @@
 import Config from './Config';
 import * as Entities from './types/Entities';
 import * as Models from './types/Models';
+import { ActionType } from './types/ActionType';
+import { StoreType } from './reducers';
 
-let token: string;
+let store: StoreType;
 let url = Config.url;
-let handlers: {[index: string]: any[]} = {
-    'authenticated': [],
-    'deauthenticated': [],
-    'error': [],
-};
 
-function executeHandlers(eventName: string, args?: any[]) {
-    handlers[eventName].forEach((func) => func.apply(null, args));
+function authenticated(token: string, user: Entities.UserEntity) {
+    store.dispatch({ type: ActionType.SET_USER, value: user });
+    store.dispatch({ type: ActionType.SET_TOKEN, value: token });
+    store.dispatch({ type: ActionType.SET_LOGGED_IN, value: true });
+}
+
+function deauthenticated() {
+    localStorage.removeItem('token');
+    store.dispatch({ type: ActionType.SET_LOGGED_IN, value: false });
+    store.dispatch({ type: ActionType.SET_USER, value: null });
+    store.dispatch({ type: ActionType.SET_TOKEN, value: null });
 }
 
 function isAuthenticated(json: any) {
     if (json && json.error && json.error.status === 403) {
-        executeHandlers('deauthenticated');
+        deauthenticated();
     }
 }
 
@@ -31,7 +37,7 @@ async function tryJson(response: Response) {
 async function httpGet(action: string) {
     let req = await fetch(url + action, {
         headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + store.getState().settings.token,
             'Accept': 'application/json',
         }
     });
@@ -46,7 +52,7 @@ async function httpPost(action: string, data: any) {
         body: JSON.stringify(data),
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + store.getState().settings.token,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         }
@@ -72,7 +78,7 @@ async function httpPostForm(action: string, data: any) {
         body: formData,
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + store.getState().settings.token,
             'Accept': 'application/json',
         }
     });
@@ -86,7 +92,7 @@ async function httpDelete(action: string) {
     let req = await fetch(url + action, {
         method: 'DELETE',
         headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + store.getState().settings.token,
             'Accept': 'application/json',
         }
     });
@@ -179,9 +185,8 @@ async function authenticate(username: string, password: string) {
     if (!res) return null;
 
     if (res.success) {
-        token = res.token;
-        localStorage.setItem('token', token);
-        executeHandlers('authenticated', [await user()]);
+        store.dispatch({ type: ActionType.SET_TOKEN, value: res.token });
+        authenticated(res.token, await user());
         return res;
     }
 
@@ -192,8 +197,7 @@ async function authenticate(username: string, password: string) {
  * Log out.
  */
 function deauthenticate() {
-    localStorage.removeItem('token');
-    executeHandlers('deauthenticated');
+    deauthenticated();
 }
 
 /**
@@ -221,28 +225,26 @@ async function signup(username: string, password: string) {
  * @param {String} value 
  */
 async function checkToken(value: string) {
-    token = value;
     const json = await user();
     
     if (json) {
-        executeHandlers('authenticated', [json]);
+        authenticated(value, json);
     } else {
-        localStorage.removeItem('token');
-        executeHandlers('deauthenticated');
-        token = null;
+        deauthenticated();
     }
 
     return json;
 }
 
 /**
- * Event handling.
- * @param {String} eventName Events: authenticated, deauthenticated, error.
- * @param {Function} func 
+ * Sets the global store for the API.
+ * @param {StoreType} theStore 
  */
-function on(eventName: string, func: Function) {
-    if (eventName in handlers) {
-        handlers[eventName].push(func);
+function setStore(theStore: StoreType) {
+    store = theStore;
+    const token = store.getState().settings.token;
+    if (token) {
+        checkToken(token);
     }
 }
 
@@ -257,5 +259,5 @@ export {
     deauthenticate,
     signup,
     checkToken,
-    on,
+    setStore,
 }

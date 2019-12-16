@@ -4,8 +4,7 @@ import styles from './styles.module.scss';
 
 import { authenticate, signup } from '../../API';
 
-function Authentication({ error, isSignup = false }: {
-    error: string,
+function Authentication({ isSignup = false }: {
     isSignup?: boolean,
 }) {
     const [ username, setUsername ] = useState<string>(null);
@@ -27,9 +26,6 @@ function Authentication({ error, isSignup = false }: {
         <div className={styles.authentication}>
             <h1>{ isSignup ? 'Sign up' : 'Sign in' }</h1>
             <section className={styles.form}>
-                { error ?
-                <div>{error}</div>
-                : null }
                 <label>
                     <input
                         placeholder="Username"
