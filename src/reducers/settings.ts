@@ -1,6 +1,5 @@
 import { ActionModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
-import { checkToken } from '../API';
 
 export interface Settings {
     darkTheme: boolean,
