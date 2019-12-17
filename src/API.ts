@@ -34,13 +34,20 @@ async function tryJson(response: Response) {
     }
 }
 
-async function httpGet(action: string) {
-    let req = await fetch(url + action, {
+async function http(method: string, action: string, body?: FormData|string) {
+    return await fetch(url + action, {
+        body: body,
+        method: method,
         headers: {
             'Authorization': 'Bearer ' + store.getState().settings.token,
+            'Content-Type': typeof body === 'string' ? 'application/json' : null,
             'Accept': 'application/json',
         }
     });
+}
+
+async function httpGet(action: string) {
+    let req = await http('GET', action);
     
     let json = await tryJson(req);
     isAuthenticated(json);
@@ -48,15 +55,7 @@ async function httpGet(action: string) {
 }
 
 async function httpPost(action: string, data: any) {
-    let req = await fetch(url + action, {
-        body: JSON.stringify(data),
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + store.getState().settings.token,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
-    });
+    let req = await http('POST', action, JSON.stringify(data));
 
     let json = await tryJson(req);
     isAuthenticated(json);
@@ -74,14 +73,7 @@ async function httpPostForm(action: string, data: any) {
         }
     }
 
-    let req = await fetch(url + action, {
-        body: formData,
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + store.getState().settings.token,
-            'Accept': 'application/json',
-        }
-    });
+    let req = await http('POST', action, formData);
 
     let json = await tryJson(req);
     isAuthenticated(json);
@@ -89,13 +81,7 @@ async function httpPostForm(action: string, data: any) {
 }
 
 async function httpDelete(action: string) {
-    let req = await fetch(url + action, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': 'Bearer ' + store.getState().settings.token,
-            'Accept': 'application/json',
-        }
-    });
+    let req = await http('DELETE', action);
 
     let json = await tryJson(req);
     isAuthenticated(json);
