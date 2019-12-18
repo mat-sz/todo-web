@@ -34,8 +34,12 @@ async function tryJson(response: Response) {
     }
 }
 
+let activeRequests = 0;
 async function http(method: string, action: string, body?: FormData|string) {
-    return await fetch(url + action, {
+    activeRequests++;
+    store.dispatch({ type: ActionType.SET_LOADING, value: true });
+
+    let req = await fetch(url + action, {
         body: body,
         method: method,
         headers: {
@@ -44,6 +48,17 @@ async function http(method: string, action: string, body?: FormData|string) {
             'Accept': 'application/json',
         }
     });
+
+    activeRequests--;
+
+    if (activeRequests < 0) {
+        // Should never happen, but let's protect ourselves against that.
+        activeRequests = 0;
+    }
+
+    store.dispatch({ type: ActionType.SET_LOADING, value: activeRequests !== 0 });
+
+    return req;
 }
 
 async function httpGet(action: string) {

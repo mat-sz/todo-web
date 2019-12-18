@@ -8,7 +8,6 @@ import { ProjectModel } from '../../types/Models';
 import { ActionType } from '../../types/ActionType';
 import { StateType } from '../../reducers';
 import { crudIndex, crudStore, deauthenticate } from '../../API';
-import SpinnerOverlay from '../SpinnerOverlay';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
@@ -22,18 +21,14 @@ function Sidebar() {
         dispatch({ type: ActionType.TOGGLE_DARK_THEME });
     }, [ dispatch ]);
     
-    const [ loading, setLoading ] = useState(false);
     const [ menuHidden, setMenuHidden ] = useState(true);
     const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
 
     const updateProjects = useCallback(async () => {
-        setLoading(true);
         setProjects(await crudIndex('projects'));
-        setLoading(false);
-    }, [ setProjects, setLoading ]);
+    }, [ setProjects ]);
 
     const onAdd = async (name: string) => {
-        setLoading(true);
         await crudStore('projects', {
             name: name,
         } as ProjectModel);
@@ -48,7 +43,6 @@ function Sidebar() {
 
     return (
         <div className={styles.sidebar}>
-            { loading ? <SpinnerOverlay /> : null }
             <div className={styles.user}>
                 <div className={styles.avatar}>
                     {user.username[0].toUpperCase()}

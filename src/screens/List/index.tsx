@@ -4,19 +4,15 @@ import styles from './styles.module.scss';
 
 import { crudShow } from '../../API';
 import { TodoListEntity } from '../../types/Entities';
-import SpinnerOverlay from '../../components/SpinnerOverlay';
 import TodoList from '../../components/TodoList';
 
 function List() {
     const params = useParams<{ id?: string }>();
 
-    const [ loading, setLoading ] = useState(false);
     const [ list, setList ] = useState<TodoListEntity>(null);
 
     const updateList = useCallback(async () => {
-        setLoading(true);
         setList(await crudShow('todolists', +params.id));
-        setLoading(false);
     }, [ setList, params.id ]);
 
     useEffect(() => {
@@ -36,7 +32,6 @@ function List() {
 
     return (
         <div className={styles.list}>
-            { loading ? <SpinnerOverlay /> : null }
             <h1>{ list.name }</h1>
             <TodoList
                 list={list}

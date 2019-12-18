@@ -4,7 +4,6 @@ import styles from './styles.module.scss';
 
 import { crudShow, crudStore } from '../../API';
 import { ProjectEntity } from '../../types/Entities';
-import SpinnerOverlay from '../../components/SpinnerOverlay';
 import ButtonAdd from '../../components/ButtonAdd';
 import TodoList from '../../components/TodoList';
 import { TodoListModel } from '../../types/Models';
@@ -12,17 +11,13 @@ import { TodoListModel } from '../../types/Models';
 function Project() {
     const params = useParams<{ id?: string }>();
 
-    const [ loading, setLoading ] = useState(false);
     const [ project, setProject ] = useState<ProjectEntity>(null);
 
     const updateProject = useCallback(async () => {
-        setLoading(true);
         setProject(await crudShow('projects', +params.id));
-        setLoading(false);
     }, [ setProject, params.id ]);
 
     const onAdd = async (name: string) => {
-        setLoading(true);
         await crudStore('todolists', {
             projectId: project.id,
             name: name,
@@ -47,7 +42,6 @@ function Project() {
 
     return (
         <div className={styles.project}>
-            { loading ? <SpinnerOverlay /> : null }
             <h1>{ project.name }</h1>
             { project.todoLists.map((list) =>
                 <TodoList
