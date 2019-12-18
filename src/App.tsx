@@ -17,7 +17,6 @@ import List from './screens/List';
 
 const App = () => {
     const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
-    const loading = useSelector((state: StateType) => state.applicationState.loading);
     const loggedIn = useSelector((state: StateType) => state.authenticationState.loggedIn);
     const user = useSelector((state: StateType) => state.authenticationState.user);
 
@@ -27,9 +26,7 @@ const App = () => {
                 'logged-in': loggedIn,
                 'theme-dark': loggedIn && darkTheme,
             })}>
-                { loading ?
-                    <SpinnerOverlay />
-                : null }
+                <SpinnerOverlay />
                 { loggedIn && user ? 
                     <>
                         <Sidebar />
