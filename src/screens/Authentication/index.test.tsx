@@ -4,12 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import store from '../../store';
-
 jest.mock('../../sagas/http', () => require('../../sagas/http.mock'));
 
 describe('authentication', () => {
     it('signs in', (done) => {
+        const store = require('../../store')();
+
         render(
             <Provider store={store}>
                 <MemoryRouter>
@@ -45,6 +45,8 @@ describe('authentication', () => {
     });
     
     it('signs up', (done) => {
+        const store = require('../../store')();
+        
         render(
             <Provider store={store}>
                 <MemoryRouter>
@@ -58,8 +60,8 @@ describe('authentication', () => {
             
             if (state.loggedIn) {
                 expect(state.user).toEqual({
-                    id: 1,
-                    username: 'test',
+                    id: 2,
+                    username: 'test2',
                 });
     
                 done();
@@ -67,7 +69,7 @@ describe('authentication', () => {
         });
     
         fireEvent.change(screen.getByPlaceholderText(/username/i), {
-            target: { value: 'test' },
+            target: { value: 'test2' },
         });
     
         fireEvent.change(screen.getByPlaceholderText(/Password/), {
@@ -78,7 +80,7 @@ describe('authentication', () => {
             target: { value: 'test' },
         });
     
-        fireEvent.click(screen.getByText(/sign in/i, { 
+        fireEvent.click(screen.getByText(/sign up/i, { 
             selector: 'button'
         }));
     });

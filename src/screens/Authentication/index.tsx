@@ -52,7 +52,7 @@ function Authentication({ isSignup = false }: {
                 <div>
                     <button onClick={action}
                         disabled={!username || !password || (isSignup && password !== passwordConfirmation)}>
-                        Sign in
+                        { isSignup ? 'Sign up' : 'Sign in' }
                     </button>
                 </div>
             </section>

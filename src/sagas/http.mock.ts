@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import { UserEntity, ProjectEntity } from '../types/Entities';
-import { AuthenticationRequestModel } from '../types/Models';
+import { AuthenticationRequestModel, SignupModel } from '../types/Models';
 
 let authenticatedUser: UserEntity = null;
 
@@ -39,6 +39,7 @@ export function* httpGet(action: string) {
 
     switch (split[0]) {
         case 'auth':
+            if ('password' in authenticatedUser) delete authenticatedUser['password'];
             return authenticatedUser;
         case 'projects':
             if (split.length === 1)
@@ -53,8 +54,22 @@ export function* httpPost(action: string, data: any) {
 
     switch (split[0]) {
         case 'auth':
+            if (split[1] && split[1] === 'signup') {
+                const signupModel: SignupModel = data as SignupModel;
+                users.push({
+                    ...signupModel,
+                    id: userId,
+                });
+                userId++;
+    
+                return {
+                    success: true,
+                };
+            }
+
             const model: AuthenticationRequestModel = data as AuthenticationRequestModel;
             if (model.password === 'test') {
+                
                 authenticatedUser = users.find((user) => user.username === model.username);
                 if (authenticatedUser) {
                     return {
