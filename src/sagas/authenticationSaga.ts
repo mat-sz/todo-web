@@ -13,6 +13,24 @@ function* authenticate(action: ActionModel) {
 
     yield put({ type: ActionType.SET_TOKEN, value: res.token });
     yield put({ type: ActionType.AUTHENTICATED, value: yield call(() => httpGet('auth')) });
+
+    yield put({ type: ActionType.FETCH_PROJECTS });
+}
+
+function *checkToken() {
+    const token = yield select((state: StateType) => state.settings.token);
+
+    if (!token) return;
+
+    let user: UserEntity = yield call(() => httpGet('auth'));
+
+    if (user) {
+        yield put({ type: ActionType.AUTHENTICATED, value: user });
+
+        yield put({ type: ActionType.FETCH_PROJECTS });
+    } else {
+        yield put({ type: ActionType.SET_TOKEN, value: null });
+    }
 }
 
 function* signup(action: ActionModel) {
@@ -26,20 +44,6 @@ function* signup(action: ActionModel) {
 function* deauthenticate() {
     yield put({ type: ActionType.SET_TOKEN, value: null });
     yield put({ type: ActionType.DEAUTHENTICATED });
-}
-
-function *checkToken() {
-    const token = yield select((state: StateType) => state.settings.token);
-
-    if (!token) return;
-
-    let user: UserEntity = yield call(() => httpGet('auth'));
-
-    if (user) {
-        yield put({ type: ActionType.AUTHENTICATED, value: user });
-    } else {
-        yield put({ type: ActionType.SET_TOKEN, value: null });
-    }
 }
 
 export default function* root() {
