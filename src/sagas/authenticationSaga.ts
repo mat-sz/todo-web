@@ -1,7 +1,7 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { ActionType } from '../types/ActionType';
 
 import { httpGet, httpPost } from './http';
+import { ActionType } from '../types/ActionType';
 import { AuthenticationResponseModel, ActionModel, GenericResponseModel } from '../types/Models';
 
 function* authenticate(action: ActionModel) {

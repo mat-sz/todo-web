@@ -10,7 +10,7 @@ import Menu from '../Menu';
 import InlineForm from '../InlineForm';
 import { crudUpdate } from '../../API';
 
-function SidebarProject({ project, updateProjects }: { project: ProjectEntity, updateProjects: () => void }) {
+function SidebarProject({ project }: { project: ProjectEntity }) {
     const [ isBeingRenamed, setIsBeingRenamed ] = useState(false);
     const [ menuHidden, setMenuHidden ] = useState(true);
     const [ listsHidden, setListsHidden ] = useState(true);
@@ -34,7 +34,7 @@ function SidebarProject({ project, updateProjects }: { project: ProjectEntity, u
             name: name,
         });
 
-        updateProjects();
+        // updateProjects();
     };
 
     const toggleLists = (e: React.SyntheticEvent) => {

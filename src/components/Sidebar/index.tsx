@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdArrowDropDown } from 'react-icons/md';
 import styles from './styles.module.scss';
 
-import { ProjectEntity } from '../../types/Entities';
 import { ProjectModel } from '../../types/Models';
 import { ActionType } from '../../types/ActionType';
 import { StateType } from '../../reducers';
-import { crudIndex, crudStore } from '../../API';
+import { crudStore } from '../../API';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
@@ -15,6 +14,7 @@ import Menu from '../Menu';
 function Sidebar() {
     const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
     const user = useSelector((state: StateType) => state.authenticationState.user);
+    const projects = useSelector((state: StateType) => state.projectState.projects);
     const dispatch = useDispatch();
 
     const toggleDarkTheme = useCallback(() => {
@@ -26,24 +26,14 @@ function Sidebar() {
     }, [ dispatch ]);
     
     const [ menuHidden, setMenuHidden ] = useState(true);
-    const [ projects, setProjects ] = useState<ProjectEntity[]>([]);
-
-    const updateProjects = useCallback(async () => {
-        setProjects(await crudIndex('projects'));
-    }, [ setProjects ]);
 
     const onAdd = async (name: string) => {
         await crudStore('projects', {
             name: name,
         } as ProjectModel);
-        updateProjects();
     };
 
     const toggleMenu = () => setMenuHidden(hidden => !hidden);
-
-    useEffect(() => {
-        updateProjects();
-    }, [ updateProjects ]);
 
     return (
         <div className={styles.sidebar}>
@@ -74,7 +64,6 @@ function Sidebar() {
                 <SidebarProject
                     project={project}
                     key={project.id}
-                    updateProjects={updateProjects}
                 />
             ) }
                 <li>
