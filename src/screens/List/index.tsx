@@ -2,17 +2,23 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 
+import { ActionType } from '../../types/ActionType';
 import { TodoListEntity } from '../../types/Entities';
 import TodoList from '../../components/TodoList';
+import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from '../../reducers';
 
 function List() {
-    const params = useParams<{ id?: string }>();
+    const dispatch = useDispatch();
+    const project = useSelector((state: StateType) => state.projectState.currentProject);
+
+    const params = useParams<{ id?: string, project_id?: string }>();
 
     const [ list, setList ] = useState<TodoListEntity>(null);
 
-    const updateList = useCallback(async () => {
-        //setList(await crudShow('todolists', +params.id));
-    }, [ setList, params.id ]);
+    const updateList = useCallback(() => {
+        dispatch({ type: ActionType.FETCH_CURRENT_PROJECT, value: params.project_id });
+    }, [ params.id, params.project_id ]);
 
     useEffect(() => {
         if (params.id)
@@ -20,6 +26,13 @@ function List() {
         else
             setList(null);
     }, [ params, updateList, setList ]);
+
+    useEffect(() => {
+        if (project && project.todoLists)
+            setList(project.todoLists.find((list) => list.id === +params.id));
+        else
+            setList(null);
+    }, [ project, setList, params.id ])
 
     if (!list) {
         return (

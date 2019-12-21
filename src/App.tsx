@@ -30,7 +30,7 @@ const App = () => {
                     <>
                         <Sidebar />
                         <Switch>
-                            <Route path="/lists/:id">
+                            <Route path="/projects/:project_id/lists/:id">
                                 <List />
                             </Route>
                             <Route path="/projects/:id">

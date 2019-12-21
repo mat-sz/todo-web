@@ -80,7 +80,7 @@ function SidebarProject({ project }: { project: ProjectEntity }) {
             })}>
                 { project.todoLists.map((todoList) =>
                     <li key={todoList.id}>
-                        <NavLink to={'/lists/' + todoList.id} activeClassName={styles.active}>
+                        <NavLink to={'/projects/' + project.id + '/lists/' + todoList.id} activeClassName={styles.active}>
                             <span>
                                 {todoList.name}
                             </span>
