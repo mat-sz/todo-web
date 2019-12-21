@@ -8,15 +8,13 @@ let store: StoreType;
 let url = Config.url;
 
 function authenticated(token: string, user: Entities.UserEntity) {
-    store.dispatch({ type: ActionType.SET_USER, value: user });
+    store.dispatch({ type: ActionType.AUTHENTICATED, value: user });
     store.dispatch({ type: ActionType.SET_TOKEN, value: token });
-    store.dispatch({ type: ActionType.SET_LOGGED_IN, value: true });
 }
 
 function deauthenticated() {
     localStorage.removeItem('token');
-    store.dispatch({ type: ActionType.SET_LOGGED_IN, value: false });
-    store.dispatch({ type: ActionType.SET_USER, value: null });
+    store.dispatch({ type: ActionType.DEAUTHENTICATED });
     store.dispatch({ type: ActionType.SET_TOKEN, value: null });
 }
 

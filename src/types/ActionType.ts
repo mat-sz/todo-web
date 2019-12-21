@@ -6,8 +6,8 @@ export enum ActionType {
     SET_TITLE,
 
     // Authentication state
-    SET_LOGGED_IN,
-    SET_USER,
+    AUTHENTICATED,
+    DEAUTHENTICATED,
 
     // Settings
     TOGGLE_DARK_THEME,

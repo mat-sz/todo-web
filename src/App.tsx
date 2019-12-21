@@ -18,7 +18,6 @@ import List from './screens/List';
 const App = () => {
     const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
     const loggedIn = useSelector((state: StateType) => state.authenticationState.loggedIn);
-    const user = useSelector((state: StateType) => state.authenticationState.user);
 
     return (
         <Router>
@@ -27,7 +26,7 @@ const App = () => {
                 'theme-dark': loggedIn && darkTheme,
             })}>
                 <SpinnerOverlay />
-                { loggedIn && user ? 
+                { loggedIn ? 
                     <>
                         <Sidebar />
                         <Switch>
