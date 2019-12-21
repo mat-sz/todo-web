@@ -15,7 +15,7 @@ function tryJson(response: Response) {
 }
 
 let activeRequests = 0;
-export function* http(method: string, action: string, body?: FormData|string) {
+function* http(method: string, action: string, body?: FormData|string) {
     activeRequests++;
     yield put({ type: ActionType.SET_LOADING, value: true });
     const token = yield select((state: StateType) => state.settings.token);
