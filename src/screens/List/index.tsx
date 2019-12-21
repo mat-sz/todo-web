@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 import { ActionType } from '../../types/ActionType';
 import { TodoListEntity } from '../../types/Entities';
 import TodoList from '../../components/TodoList';
-import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../reducers';
 
 function List() {
@@ -18,7 +18,7 @@ function List() {
 
     const updateList = useCallback(() => {
         dispatch({ type: ActionType.FETCH_CURRENT_PROJECT, value: params.project_id });
-    }, [ params.id, params.project_id ]);
+    }, [ params.project_id, dispatch ]);
 
     useEffect(() => {
         if (params.id)

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
@@ -6,7 +7,6 @@ import { TodoItemEntity } from '../../types/Entities';
 import ButtonMenu from '../ButtonMenu';
 import Menu from '../Menu';
 import InlineForm from '../InlineForm';
-import { useDispatch } from 'react-redux';
 import { ActionType } from '../../types/ActionType';
 
 function TodoItem({ item, onUpdate } : { item: TodoItemEntity, onUpdate?: () => void }) {
