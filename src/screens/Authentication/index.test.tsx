@@ -3,20 +3,19 @@ import Authentication from './';
 import { MemoryRouter } from 'react-router-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-
-jest.mock('../../sagas/http', () => require('../../sagas/http.mock'));
+import { StoreType } from '../../reducers';
 
 describe('authentication', () => {
-    it('signs in', (done) => {
-        const store = require('../../store')();
+    beforeEach(() => {
+        jest.mock('../../sagas/http', () => require('../../sagas/http.mock')());
+    });
 
-        render(
-            <Provider store={store}>
-                <MemoryRouter>
-                    <Authentication isSignup={false} />
-                </MemoryRouter>
-            </Provider>
-        );
+    afterEach(() => {
+        jest.resetModules();
+    });
+    
+    it('signs in', (done) => {
+        const store: StoreType = require('../../store')();
     
         store.subscribe(() => {
             const state = store.getState().authenticationState;
@@ -30,6 +29,14 @@ describe('authentication', () => {
                 done();
             }
         });
+
+        render(
+            <Provider store={store}>
+                <MemoryRouter>
+                    <Authentication isSignup={false} />
+                </MemoryRouter>
+            </Provider>
+        );
     
         fireEvent.change(screen.getByPlaceholderText(/username/i), {
             target: { value: 'test' },
@@ -45,15 +52,7 @@ describe('authentication', () => {
     });
     
     it('signs up', (done) => {
-        const store = require('../../store')();
-        
-        render(
-            <Provider store={store}>
-                <MemoryRouter>
-                    <Authentication isSignup={true} />
-                </MemoryRouter>
-            </Provider>
-        );
+        const store: StoreType = require('../../store')();
     
         store.subscribe(() => {
             const state = store.getState().authenticationState;
@@ -67,6 +66,14 @@ describe('authentication', () => {
                 done();
             }
         });
+        
+        render(
+            <Provider store={store}>
+                <MemoryRouter>
+                    <Authentication isSignup={true} />
+                </MemoryRouter>
+            </Provider>
+        );
     
         fireEvent.change(screen.getByPlaceholderText(/username/i), {
             target: { value: 'test2' },
