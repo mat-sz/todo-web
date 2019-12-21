@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 
-import { authenticate, signup } from '../../API';
+import { ActionType } from '../../types/ActionType';
 
 function Authentication({ isSignup = false }: {
     isSignup?: boolean,
@@ -10,16 +11,19 @@ function Authentication({ isSignup = false }: {
     const [ username, setUsername ] = useState<string>(null);
     const [ password, setPassword ] = useState<string>(null);
     const [ passwordConfirmation, setPasswordConfirmation ] = useState<string>(null);
+    const dispatch = useDispatch();
 
     const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     const onChangePasswordConfirmation = (e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirmation(e.target.value);
 
     const action = () => {
-        if (isSignup)
-            signup(username, password);
-        else
-            authenticate(username, password);
+        const model = {
+            username: username,
+            password: password
+        };
+
+        dispatch({ type: isSignup ? ActionType.SIGNUP : ActionType.AUTHENTICATE, value: model });
     };
 
     return (

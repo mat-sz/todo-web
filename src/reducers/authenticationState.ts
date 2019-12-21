@@ -15,11 +15,13 @@ let initialState: AuthenticationState = {
 export default function authenticationState(state = initialState, action: ActionModel) {
     const newState = {...state};
     switch (action.type) {
-        case ActionType.SET_LOGGED_IN:
-            newState.loggedIn = action.value as boolean;
-            break;
-        case ActionType.SET_USER:
+        case ActionType.AUTHENTICATED:
+            newState.loggedIn = true;
             newState.user = action.value as UserEntity;
+            break;
+        case ActionType.DEAUTHENTICATED:
+            newState.loggedIn = false;
+            newState.user = null;
             break;
         default:
             return state;

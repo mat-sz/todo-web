@@ -75,24 +75,6 @@ async function httpPost(action: string, data: any) {
     return json;
 }
 
-async function httpPostForm(action: string, data: any) {
-    let formData = new FormData();
-    
-    if (data) {
-        for (let row of Object.keys(data)) {
-            if (row === 'key') continue;
-            if (typeof data[row] === 'undefined' || data[row] === null) continue;
-            formData.append(row, data[row]);
-        }
-    }
-
-    let req = await http('POST', action, formData);
-
-    let json = await tryJson(req);
-    isAuthenticated(json);
-    return json;
-}
-
 async function httpDelete(action: string) {
     let req = await http('DELETE', action);
 
@@ -130,15 +112,6 @@ async function crudStore(type: string, object: any) {
 }
 
 /**
- * Save an object of a given type. (Supports file uploads.)
- * @param {String} type 
- * @param {Object} object 
- */
-async function crudUpload(type: string, object: any) {
-    return httpPostForm(type, object);
-}
-
-/**
  * Update an object. (The object must have an 'id' field)
  * @param {String} type 
  * @param {Object} object 
@@ -168,55 +141,6 @@ async function user(): Promise<Entities.UserEntity> {
     } else {
         return null;
     }
-}
-
-/**
- * Log in.
- * @param {String} username 
- * @param {String} password 
- */
-async function authenticate(username: string, password: string) {
-    let res: Models.AuthenticationResponseModel = await httpPost('auth', {
-        username: username,
-        password: password,
-    });
-
-    if (!res) return null;
-
-    if (res.success) {
-        store.dispatch({ type: ActionType.SET_TOKEN, value: res.token });
-        authenticated(res.token, await user());
-        return res;
-    }
-
-    return res;
-}
-
-/**
- * Log out.
- */
-function deauthenticate() {
-    deauthenticated();
-}
-
-/**
- * Register.
- * @param {String} username 
- * @param {String} password 
- */
-async function signup(username: string, password: string) {
-    let res: Models.GenericResponseModel = await httpPost('auth/signup', {
-        username: username,
-        password: password,
-    });
-
-    if (!res) return null;
-
-    if (res.success) {
-        await authenticate(username, password);
-    }
-
-    return res;
 }
 
 /**
@@ -250,13 +174,9 @@ function setStore(theStore: StoreType) {
 export {
     crudIndex,
     crudShow,
-    crudUpload,
     crudStore,
     crudUpdate,
     crudDelete,
-    authenticate,
-    deauthenticate,
-    signup,
     checkToken,
     setStore,
 }

@@ -7,7 +7,7 @@ import { ProjectEntity } from '../../types/Entities';
 import { ProjectModel } from '../../types/Models';
 import { ActionType } from '../../types/ActionType';
 import { StateType } from '../../reducers';
-import { crudIndex, crudStore, deauthenticate } from '../../API';
+import { crudIndex, crudStore } from '../../API';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
@@ -19,6 +19,10 @@ function Sidebar() {
 
     const toggleDarkTheme = useCallback(() => {
         dispatch({ type: ActionType.TOGGLE_DARK_THEME });
+    }, [ dispatch ]);
+
+    const deauthenticate = useCallback(() => {
+        dispatch({ type: ActionType.DEAUTHENTICATE });
     }, [ dispatch ]);
     
     const [ menuHidden, setMenuHidden ] = useState(true);

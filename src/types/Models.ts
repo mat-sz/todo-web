@@ -53,6 +53,6 @@ export interface ObjectModel {
 };
 
 export interface ActionModel {
-    type: number,
+    type: string,
     value: any,
 };
