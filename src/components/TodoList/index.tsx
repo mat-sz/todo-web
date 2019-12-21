@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 import { TodoListEntity } from '../../types/Entities';
 import TodoItem from '../TodoItem';
 import InlineForm from '../InlineForm';
-import { crudStore } from '../../API';
 import { TodoItemModel } from '../../types/Models';
+import { ActionType } from '../../types/ActionType';
 
 function TodoList({ list, onUpdate } : { list: TodoListEntity, onUpdate?: () => void }) {
-    const addItem = async (text: string) => {
-        await crudStore('todoitems', {
+    const dispatch = useDispatch();
+
+    const addItem = useCallback((text: string) => {
+        const item: TodoItemModel = {
             todoListId: list.id,
             name: text,
             done: false,
-        } as TodoItemModel);
-        if (onUpdate)
-            onUpdate();
-    };
+        };
+        
+        dispatch({ type: ActionType.CREATE_TODO_ITEM, value: item });
+    }, [ dispatch, list ]);
 
     return (
         <div className={styles.list}>

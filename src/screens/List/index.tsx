@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 
-import { crudShow } from '../../API';
 import { TodoListEntity } from '../../types/Entities';
 import TodoList from '../../components/TodoList';
 
@@ -12,7 +11,7 @@ function List() {
     const [ list, setList ] = useState<TodoListEntity>(null);
 
     const updateList = useCallback(async () => {
-        setList(await crudShow('todolists', +params.id));
+        //setList(await crudShow('todolists', +params.id));
     }, [ setList, params.id ]);
 
     useEffect(() => {

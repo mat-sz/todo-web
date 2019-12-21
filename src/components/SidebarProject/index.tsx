@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { MdChevronRight } from 'react-icons/md';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
+import { ActionType } from '../../types/ActionType';
 import { ProjectEntity } from '../../types/Entities';
 import ButtonMenu from '../ButtonMenu';
 import Menu from '../Menu';
 import InlineForm from '../InlineForm';
-import { crudUpdate } from '../../API';
 
 function SidebarProject({ project }: { project: ProjectEntity }) {
+    const dispatch = useDispatch();
+
     const [ isBeingRenamed, setIsBeingRenamed ] = useState(false);
     const [ menuHidden, setMenuHidden ] = useState(true);
     const [ listsHidden, setListsHidden ] = useState(true);
@@ -24,18 +27,17 @@ function SidebarProject({ project }: { project: ProjectEntity }) {
         setMenuHidden(true);
         setIsBeingRenamed(true);
     };
+
     const stopRenaming = () => setIsBeingRenamed(false);
 
-    const renameProject = async (name: string) => {
+    const renameProject = useCallback((name: string) => {
         stopRenaming();
 
-        await crudUpdate('projects', {
+        dispatch({ type: ActionType.UPDATE_PROJECT, value: {
             ...project,
             name: name,
-        });
-
-        // updateProjects();
-    };
+        }});
+    }, [ dispatch, project ]);
 
     const toggleLists = (e: React.SyntheticEvent) => {
         e.preventDefault();

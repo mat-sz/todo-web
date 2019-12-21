@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MdArrowDropDown } from 'react-icons/md';
 import styles from './styles.module.scss';
 
-import { ProjectModel } from '../../types/Models';
 import { ActionType } from '../../types/ActionType';
 import { StateType } from '../../reducers';
-import { crudStore } from '../../API';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
@@ -27,11 +25,9 @@ function Sidebar() {
     
     const [ menuHidden, setMenuHidden ] = useState(true);
 
-    const onAdd = async (name: string) => {
-        await crudStore('projects', {
-            name: name,
-        } as ProjectModel);
-    };
+    const onAdd = useCallback((name: string) => {
+        dispatch({ type: ActionType.CREATE_PROJECT, value: name });
+    }, [ dispatch ]);
 
     const toggleMenu = () => setMenuHidden(hidden => !hidden);
 

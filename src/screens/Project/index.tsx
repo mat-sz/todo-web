@@ -3,10 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 
-import { crudStore } from '../../API';
 import ButtonAdd from '../../components/ButtonAdd';
 import TodoList from '../../components/TodoList';
-import { TodoListModel } from '../../types/Models';
 import { ActionType } from '../../types/ActionType';
 import { StateType } from '../../reducers';
 
@@ -19,13 +17,9 @@ function Project() {
         dispatch({ type: ActionType.FETCH_CURRENT_PROJECT, value: params.id });
     }, [ dispatch, params.id ]);
 
-    const onAdd = async (name: string) => {
-        await crudStore('todolists', {
-            projectId: project.id,
-            name: name,
-        } as TodoListModel);
-        onUpdate();
-    };
+    const onAdd = useCallback((name: string) => {
+        dispatch({ type: ActionType.CREATE_TODO_LIST, value: name });
+    }, [ dispatch ]);
 
     useEffect(() => {
         if (params.id)
