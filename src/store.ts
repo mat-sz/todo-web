@@ -17,4 +17,3 @@ const newStore = (): StoreType => {
 };
 
 export default newStore;
-module.exports = newStore;

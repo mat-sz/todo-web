@@ -15,7 +15,9 @@ const savedSettingsSerialized = localStorage.getItem('settings');
 if (savedSettingsSerialized) {
     try {
         initialState = JSON.parse(savedSettingsSerialized) as Settings;
-    } catch {}
+    } catch {
+        console.log('Unable to load settings.');
+    }
 }
   
 export default function settings(state = initialState, action: ActionModel) {
@@ -30,8 +32,6 @@ export default function settings(state = initialState, action: ActionModel) {
         default:
             return state;
     }
-
-    localStorage.setItem('settings', JSON.stringify(newState));
 
     return newState;
 };
