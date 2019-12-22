@@ -3,10 +3,10 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-import Project from './';
+import List from './';
 import { StoreType } from '../../reducers';
 
-describe('project', () => {
+describe('list', () => {
     beforeEach(() => {
         jest.mock('../../sagas/http', () => require('../../sagas/http.mock')());
     });
@@ -33,9 +33,9 @@ describe('project', () => {
 
         render(
             <Provider store={store}>
-                <MemoryRouter initialEntries={[ 'projects/1' ]}>
-                    <Route path='projects/:id'>
-                        <Project />
+                <MemoryRouter initialEntries={[ 'projects/1/lists/1' ]}>
+                    <Route path='projects/:project_id/lists/:id'>
+                        <List />
                     </Route>
                 </MemoryRouter>
             </Provider>
@@ -66,9 +66,9 @@ describe('project', () => {
 
         render(
             <Provider store={store}>
-                <MemoryRouter initialEntries={[ 'projects/1' ]}>
-                    <Route path='projects/:id'>
-                        <Project />
+                <MemoryRouter initialEntries={[ 'projects/1/lists/1' ]}>
+                    <Route path='projects/:project_id/lists/:id'>
+                        <List />
                     </Route>
                 </MemoryRouter>
             </Provider>
@@ -104,9 +104,9 @@ describe('project', () => {
 
         render(
             <Provider store={store}>
-                <MemoryRouter initialEntries={[ 'projects/1' ]}>
-                    <Route path='projects/:id'>
-                        <Project />
+                <MemoryRouter initialEntries={[ 'projects/1/lists/1' ]}>
+                    <Route path='projects/:project_id/lists/:id'>
+                        <List />
                     </Route>
                 </MemoryRouter>
             </Provider>
@@ -138,9 +138,9 @@ describe('project', () => {
 
         render(
             <Provider store={store}>
-                <MemoryRouter initialEntries={[ 'projects/1' ]}>
-                    <Route path='projects/:id'>
-                        <Project />
+                <MemoryRouter initialEntries={[ 'projects/1/lists/1' ]}>
+                    <Route path='projects/:project_id/lists/:id'>
+                        <List />
                     </Route>
                 </MemoryRouter>
             </Provider>
@@ -177,9 +177,9 @@ describe('project', () => {
 
         render(
             <Provider store={store}>
-                <MemoryRouter initialEntries={[ 'projects/1' ]}>
-                    <Route path='projects/:id'>
-                        <Project />
+                <MemoryRouter initialEntries={[ 'projects/1/lists/1' ]}>
+                    <Route path='projects/:project_id/lists/:id'>
+                        <List />
                     </Route>
                 </MemoryRouter>
             </Provider>

@@ -1,8 +1,9 @@
 import React from 'react';
-import Authentication from './';
-import { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { render, fireEvent, screen } from '@testing-library/react';
+
+import Authentication from './';
 import { StoreType } from '../../reducers';
 
 describe('authentication', () => {
@@ -15,7 +16,7 @@ describe('authentication', () => {
     });
     
     it('signs in', (done) => {
-        const store: StoreType = require('../../store')();
+        const store: StoreType = require('../../store').default();
     
         store.subscribe(() => {
             const state = store.getState().authenticationState;
@@ -52,7 +53,7 @@ describe('authentication', () => {
     });
     
     it('signs up', (done) => {
-        const store: StoreType = require('../../store')();
+        const store: StoreType = require('../../store').default();
     
         store.subscribe(() => {
             const state = store.getState().authenticationState;
