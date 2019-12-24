@@ -1,10 +1,9 @@
 import { put, call, select } from 'redux-saga/effects';
 
-import Config from '../Config';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 
-let url = Config.url;
+let url = process.env.REACT_APP_API_URL || 'http://localhost:5000/';
 
 function tryJson(response: Response) {
     try {
