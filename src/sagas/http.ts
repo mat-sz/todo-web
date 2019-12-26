@@ -5,11 +5,11 @@ import { StateType } from '../reducers';
 
 let url = process.env.REACT_APP_API_URL || 'http://localhost:5000/';
 
-function tryJson(response: Response) {
+async function tryJson(response: Response) {
     try {
-        return response.json();
+        return await response.json();
     } catch {
-        return Promise.resolve(null);
+        return null;
     }
 }
 
