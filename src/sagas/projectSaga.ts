@@ -57,6 +57,7 @@ function* createTodoList(action: ActionModel) {
         name: action.value as string,
     }));
 
+    yield call(fetchProjects);
     yield call(fetchCurrentProject);
 }
 
