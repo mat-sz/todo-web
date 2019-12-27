@@ -2,15 +2,15 @@ import { put, takeEvery, call, select } from 'redux-saga/effects';
 
 import { httpGet, httpPost, httpDelete } from './http';
 import { ActionType } from '../types/ActionType';
-import { ActionModel } from '../types/Models';
+import { ActionModel, ResponseModel } from '../types/Models';
 import { ProjectEntity, TodoItemEntity } from '../types/Entities';
 import { StateType } from '../reducers';
 
 function* fetchProjects() {
-    let res: ProjectEntity[] = yield call(() => httpGet('projects'));
+    let res: ResponseModel = yield call(() => httpGet('projects'));
 
-    if (res) {
-        yield put({ type: ActionType.SET_PROJECTS, value: res });
+    if (res.success) {
+        yield put({ type: ActionType.SET_PROJECTS, value: res.data });
     }
 }
 
@@ -28,10 +28,10 @@ function* fetchCurrentProject(action?: ActionModel) {
 
     if (!id) return;
 
-    let res: ProjectEntity = yield call(() => httpGet('projects/' + id));
+    let res: ResponseModel = yield call(() => httpGet('projects/' + id));
 
-    if (res) {
-        yield put({ type: ActionType.SET_CURRENT_PROJECT, value: res });
+    if (res.success) {
+        yield put({ type: ActionType.SET_CURRENT_PROJECT, value: res.data });
     }
 }
 

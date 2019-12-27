@@ -39,12 +39,21 @@ module.exports = function () {
         switch (split[0]) {
             case 'auth':
                 if (authenticatedUser && 'password' in authenticatedUser) delete authenticatedUser['password'];
-                return authenticatedUser;
+                return {
+                    success: true,
+                    data: authenticatedUser,
+                };
             case 'projects':
                 if (split.length === 1)
-                    return projects;
+                    return {
+                        success: true,
+                        data: projects,
+                    };
                 else
-                    return projects.find((project) => project.id == +split[1]);
+                    return {
+                        success: true,
+                        data: projects.find((project) => project.id == +split[1]),
+                    };
         }
     }
     
@@ -73,7 +82,7 @@ module.exports = function () {
                     if (authenticatedUser) {
                         return {
                             success: true,
-                            token: 'test',
+                            data: 'test',
                         };
                     }
                 }

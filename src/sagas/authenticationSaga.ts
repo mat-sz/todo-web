@@ -2,17 +2,19 @@ import { put, takeEvery, call, select } from 'redux-saga/effects';
 
 import { httpGet, httpPost } from './http';
 import { ActionType } from '../types/ActionType';
-import { AuthenticationResponseModel, ActionModel, GenericResponseModel } from '../types/Models';
+import { ActionModel, ResponseModel } from '../types/Models';
 import { StateType } from '../reducers';
 import { UserEntity } from '../types/Entities';
 
 function* authenticate(action: ActionModel) {
-    let res: AuthenticationResponseModel = yield call(() => httpPost('auth', action.value));
+    let res: ResponseModel = yield call(() => httpPost('auth', action.value));
 
     if (!res.success) return;
 
-    yield put({ type: ActionType.SET_TOKEN, value: res.token });
-    yield put({ type: ActionType.AUTHENTICATED, value: yield call(() => httpGet('auth')) });
+    yield put({ type: ActionType.SET_TOKEN, value: res.data });
+
+    let authRes = yield call(() => httpGet('auth'));
+    yield put({ type: ActionType.AUTHENTICATED, value: authRes.data });
 
     yield put({ type: ActionType.FETCH_PROJECTS });
 }
@@ -22,7 +24,8 @@ function *checkToken() {
 
     if (!token) return;
 
-    let user: UserEntity = yield call(() => httpGet('auth'));
+    const res: ResponseModel = yield call(() => httpGet('auth'));
+    const user: UserEntity = res.data;
 
     if (user) {
         yield put({ type: ActionType.AUTHENTICATED, value: user });
@@ -34,7 +37,7 @@ function *checkToken() {
 }
 
 function* signup(action: ActionModel) {
-    let res: GenericResponseModel = yield call(() => httpPost('auth/signup', action.value));
+    let res: ResponseModel = yield call(() => httpPost('auth/signup', action.value));
 
     if (!res.success) return;
 

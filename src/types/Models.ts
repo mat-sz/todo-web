@@ -3,11 +3,6 @@ export interface AuthenticationRequestModel {
     password: string,
 };
 
-export interface AuthenticationResponseModel {
-    success: boolean,
-    token?: string,
-};
-
 export interface PasswordUpdateRequestModel {
     oldPassword: string,
     password: string,
@@ -42,9 +37,14 @@ export interface TodoListUpdateModel {
     name: string,
 };
 
-export interface GenericResponseModel {
+export interface ErrorModel {
+    message: string,
+}
+
+export interface ResponseModel {
     success: boolean,
-    message?: string,
+    error?: ErrorModel,
+    data?: any,
 };
 
 export interface ObjectModel {

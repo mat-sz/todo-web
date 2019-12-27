@@ -2,10 +2,11 @@ import { put, call, select } from 'redux-saga/effects';
 
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
+import { ResponseModel } from '../types/Models';
 
 let url = process.env.REACT_APP_API_URL || 'http://localhost:5000/';
 
-async function tryJson(response: Response) {
+async function tryJson(response: Response): Promise<ResponseModel> {
     try {
         return await response.json();
     } catch {
@@ -38,23 +39,18 @@ function* http(method: string, action: string, body?: FormData|string) {
 
     yield put({ type: ActionType.SET_LOADING, value: activeRequests !== 0 });
 
-    return res;
+    let json = (yield call(() => tryJson(res))) as ResponseModel;
+    return json;
 }
 
 export function* httpGet(action: string) {
-    let res = yield call(() => http('GET', action));
-    
-    return yield call(() => tryJson(res));
+    return yield call(() => http('GET', action));
 }
 
 export function* httpPost(action: string, data: any) {
-    let res = yield call(() => http('POST', action, JSON.stringify(data)));
-
-    return yield call(() => tryJson(res));
+    return yield call(() => http('POST', action, JSON.stringify(data)));
 }
 
 export function* httpDelete(action: string) {
-    let res = yield call(() => http('DELETE', action));
-
-    return yield call(() => tryJson(res));
+    return yield call(() => http('DELETE', action));
 }
