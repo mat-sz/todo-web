@@ -1,0 +1,41 @@
+@import '../../constants.scss';
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    background: rgba(0,0,0,0.5);
+    opacity: 1;
+
+    transition: 0.2s ease-in-out all;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.error {
+    box-shadow: 1px 15px 15px -15px rgba(0,0,0,0.3);
+    background: $theme-primary-color;
+    color: $theme-secondary-color;
+    padding: 1rem;
+
+    .buttons {
+        padding-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+
+        button {
+            flex: 1;
+        }
+    }
+}

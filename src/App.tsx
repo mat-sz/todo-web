@@ -10,6 +10,7 @@ import './App.scss';
 
 import { StateType } from './reducers';
 import SpinnerOverlay from './components/SpinnerOverlay';
+import ErrorOverlay from './components/ErrorOverlay';
 import Authentication from './screens/Authentication';
 import Project from './screens/Project';
 import Sidebar from './components/Sidebar';
@@ -26,6 +27,7 @@ const App = () => {
                 'theme-dark': loggedIn && darkTheme,
             })}>
                 <SpinnerOverlay />
+                <ErrorOverlay />
                 { loggedIn ? 
                     <>
                         <Sidebar />

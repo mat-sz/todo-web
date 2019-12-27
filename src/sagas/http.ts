@@ -40,6 +40,11 @@ function* http(method: string, action: string, body?: FormData|string) {
     yield put({ type: ActionType.SET_LOADING, value: activeRequests !== 0 });
 
     let json = (yield call(() => tryJson(res))) as ResponseModel;
+
+    if (json && json.error) {
+        yield put({ type: ActionType.SET_ERROR, value: json.error.message });
+    }
+
     return json;
 }
 
