@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
@@ -8,10 +8,10 @@ import { ActionType } from '../../types/ActionType';
 function Authentication({ isSignup = false }: {
     isSignup?: boolean,
 }) {
+    const dispatch = useDispatch();
     const [ username, setUsername ] = useState<string>(null);
     const [ password, setPassword ] = useState<string>(null);
     const [ passwordConfirmation, setPasswordConfirmation ] = useState<string>(null);
-    const dispatch = useDispatch();
 
     const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -22,7 +22,9 @@ function Authentication({ isSignup = false }: {
         [ username, password, isSignup, passwordConfirmation ]
     );
 
-    const action = useCallback(() => {
+    const action = useCallback((e: FormEvent) => {
+        e.preventDefault();
+
         if (formDisabled) {
             return;
         }
