@@ -1,6 +1,8 @@
 import { ActionModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
+export const localStorageKey = 'todo__settings';
+
 export interface Settings {
     darkTheme: boolean,
     token: string,
@@ -11,7 +13,7 @@ let initialState: Settings = {
     token: null,
 };
 
-const savedSettingsSerialized = localStorage.getItem('settings');
+const savedSettingsSerialized = localStorage.getItem(localStorageKey);
 if (savedSettingsSerialized) {
     try {
         initialState = JSON.parse(savedSettingsSerialized) as Settings;
