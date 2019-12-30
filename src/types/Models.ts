@@ -39,7 +39,7 @@ export interface TodoListUpdateModel {
 
 export interface ErrorModel {
     message: string,
-}
+};
 
 export interface ResponseModel {
     success: boolean,

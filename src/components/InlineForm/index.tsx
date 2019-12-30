@@ -21,7 +21,6 @@ function InlineForm({ defaultValue, onSave, onCancel, saveText = 'Save' }: { def
     };
 
     const keyUp = (e: React.KeyboardEvent) => {
-        console.log(e.key);
         switch (e.key) {
             case 'Enter':
                 save();
