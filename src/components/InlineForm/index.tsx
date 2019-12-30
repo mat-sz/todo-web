@@ -22,9 +22,6 @@ function InlineForm({ defaultValue, onSave, onCancel, saveText = 'Save' }: { def
 
     const keyUp = (e: React.KeyboardEvent) => {
         switch (e.key) {
-            case 'Enter':
-                save();
-                break;
             case 'Escape':
                 cancel();
                 break;
@@ -32,22 +29,24 @@ function InlineForm({ defaultValue, onSave, onCancel, saveText = 'Save' }: { def
     };
 
     return (
-        <div className={styles.inlineForm}>
+        <form
+            className={styles.inlineForm}
+            onSubmit={save}>
             <input
                 type="text"
                 value={value}
                 onChange={updateValue}
                 onKeyUp={keyUp}
             />
+            <button type='submit'>
+                { saveText }
+            </button>
             { onCancel ?
                 <button onClick={cancel}>
                     Cancel
                 </button>
             : null }
-            <button onClick={save}>
-                { saveText }
-            </button>
-        </div>
+        </form>
     );
 }
 
