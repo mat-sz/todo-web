@@ -11,10 +11,12 @@ import './App.scss';
 import { StateType } from './reducers';
 import SpinnerOverlay from './components/SpinnerOverlay';
 import ErrorOverlay from './components/ErrorOverlay';
+import Sidebar from './components/Sidebar';
+
 import Authentication from './screens/Authentication';
 import Project from './screens/Project';
-import Sidebar from './components/Sidebar';
 import List from './screens/List';
+import User from './screens/User';
 
 const App = () => {
     const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
@@ -37,6 +39,9 @@ const App = () => {
                             </Route>
                             <Route path="/projects/:id">
                                 <Project />
+                            </Route>
+                            <Route path="/user">
+                                <User />
                             </Route>
                             <Route path="/">
 

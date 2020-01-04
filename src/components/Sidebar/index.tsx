@@ -8,12 +8,14 @@ import { StateType } from '../../reducers';
 import ButtonAdd from '../ButtonAdd';
 import SidebarProject from '../SidebarProject';
 import Menu from '../Menu';
+import { useHistory } from 'react-router-dom';
 
 function Sidebar() {
     const darkTheme = useSelector((state: StateType) => state.settings.darkTheme);
     const user = useSelector((state: StateType) => state.authenticationState.user);
     const projects = useSelector((state: StateType) => state.projectState.projects);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const toggleDarkTheme = useCallback(() => {
         dispatch({ type: ActionType.TOGGLE_DARK_THEME });
@@ -22,6 +24,9 @@ function Sidebar() {
     const deauthenticate = useCallback(() => {
         dispatch({ type: ActionType.DEAUTHENTICATE });
     }, [ dispatch ]);
+
+    const goToUser = useCallback(() => history.push('/user'),
+    [ history ]);
     
     const [ menuHidden, setMenuHidden ] = useState(true);
 
@@ -45,6 +50,10 @@ function Sidebar() {
                         {
                             title: darkTheme ? 'Light theme' : 'Dark theme',
                             onClick: toggleDarkTheme,
+                        },
+                        {
+                            title: 'Edit user',
+                            onClick: goToUser
                         },
                         {
                             title: 'Log out',
