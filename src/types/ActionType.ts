@@ -13,6 +13,7 @@ export enum ActionType {
     AUTHENTICATE = 'AUTHENTICATE',
     DEAUTHENTICATE = 'DEAUTHENTICATE',
     SIGNUP = 'SIGNUP',
+    SET_PASSWORD = 'SET_PASSWORD',
 
     // Project state
     SET_PROJECTS = 'SET_PROJECTS',

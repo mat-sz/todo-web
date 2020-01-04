@@ -49,10 +49,17 @@ function* deauthenticate() {
     yield put({ type: ActionType.DEAUTHENTICATED });
 }
 
+function* setPassword(action: ActionModel) {
+    let res: ResponseModel = yield call(() => httpPost('auth/password', action.value));
+
+    if (!res.success) return;
+}
+
 export default function* root() {
     yield call(checkToken);
 
     yield takeEvery(ActionType.AUTHENTICATE, authenticate);
     yield takeEvery(ActionType.DEAUTHENTICATE, deauthenticate);
     yield takeEvery(ActionType.SIGNUP, signup);
+    yield takeEvery(ActionType.SET_PASSWORD, setPassword);
 };
